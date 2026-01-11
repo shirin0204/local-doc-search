@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# local-doc-search
 
-## Getting Started
+ローカル環境で動作する、**社内・個人ドキュメント向け検索支援ツール**です。  
+PDFなどの資料を取り込み、キーワード検索によって **該当ページや根拠箇所を素早く見つける** ことを目的としています。
 
-First, run the development server:
+本アプリは **LLMや外部APIを使用せず、完全にローカルで完結** する設計となっており、  
+ネットワーク制限や情報持ち出し制限がある環境でも利用できることを重視しています。
 
+---
+
+## 主な機能
+- ローカルPDFファイルの登録
+- ページ単位での全文検索
+- 複数キーワード（AND / OR）検索
+- 検索結果の抜粋（スニペット）表示
+- 検索語のハイライト
+- 該当ページへのワンクリックジャンプ（PDFビューア）
+- 引用・調査メモ用のテキストコピー
+
+---
+
+## 想定ユースケース
+- 社内規程・マニュアル・手順書の横断検索
+- 調査業務における根拠箇所の素早い確認
+- 非エンジニア向けのドキュメント検索支援
+- オフライン環境での資料参照
+
+---
+
+## 対応ファイル形式
+- PDF（テキスト抽出可能なもの）
+- Word（.docx）
+
+※ 画像のみのPDFやOCRが必要なファイル形式は現時点では非対応です。
+
+---
+
+## 設計方針
+- **Local-first**  
+  すべてのデータはローカルPC内に保存され、外部サーバーへ送信されません。
+- **LLM非依存**  
+  AIが利用できない環境でも「調査を効率化する」ことを重視しています。
+- **将来拡張可能**  
+  ローカルLLM等を用いた要約・質問応答機能の追加を想定した構成です。
+
+---
+
+## 技術スタック
+- Next.js（App Router）
+- TypeScript
+- SQLite（全文検索）
+- PDF.js（PDF表示）
+
+※ デスクトップアプリ化（Tauri）を前提とした構成を想定しています。
+
+---
+
+## セットアップ（開発用）
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 今後の予定
+表記揺れ・略語対応
+検索履歴・ブックマーク機能
+検索結果のスコアリング改善
+ローカルLLM連携（オプション機能）
